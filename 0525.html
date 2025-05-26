@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Spatial.io 실습 워크숍</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --primary: #ff6ec4;
+  --secondary: #7873f5;
+  --text: #222;
+  --bg: #f0f4f8;
+  --slideW: 1280px;
+  --slideH: 720px;
+  --font-base: 24px;
+  --font-heading: 36px;
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; }
+.slides { width: var(--slideW); margin: 0 auto; }
+.slide {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 40px 60px;
+  margin: 40px 0;
+  min-height: var(--slideH);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  line-height: 1.5;
+}
+.cover {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: var(--slideH);
+}
+.cover h1, .cover h2, .cover h3 { color: #fff; margin: 8px 0; }
+.cover h1 { font-size: 64px; font-weight: 700; }
+.cover h2 { font-size: 48px; font-weight: 500; }
+.cover-line { width: 60%; border: none; border-top: 2px solid #fff; margin: 20px 0; }
+.cover h3 { font-size: 22px; font-weight: 300; }
+h2 { font-size: var(--font-heading); margin-bottom: 16px; color: var(--primary); }
+p { font-size: var(--font-base); margin-bottom: 16px; }
+ol, ul { margin: 16px 0; padding-left: 40px; }
+li { margin-bottom: 12px; font-size: var(--font-base); }
+.tooltip { position: relative; cursor: help; text-decoration: underline dotted var(--primary); }
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%; left: 50%; transform: translateX(-50%);
+  opacity: 0; transition: opacity .3s;
+  font-size: 16px; line-height: 1.4;
+}
+.tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+a { color: var(--primary); font-weight: 500; text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <!-- Cover -->
+  <section class="slide cover">
+    <h1><i class="fa-solid fa-vr-cardboard"></i> 메타버스 플랫폼 실습</h1>
+    <h2>Spatial.io</h2>
+    <hr class="cover-line">
+    <h3>대상: 2025 ITM 1학년</h3>
+    <h3><i class="fa-regular fa-clock"></i> 60분 (개요 10′ + Hands-on 45′ + Q&A 5′)</h3>
+  </section>
+
+  <!-- 1. Outline -->
+  <section class="slide">
+    <h2><i class="fa-solid fa-list"></i> 목차</h2>
+    <p style="font-size:24px">오늘은 <strong>메타버스 플랫폼</strong>의 핵심 원리를 배우고, <br>
+        <strong>Spatial.io</strong>의 다양한 기능을 직접 실습해 볼 예정입니다</p>
+    <ol>
+      <li><strong>메타버스의 컴퓨터 공학적 원리:</strong> WebGL 렌더링, 네트워크 동기화 개념 이해</li>
+      <li><strong>실제 활용 사례:</strong> 기업 회의 및 교육·전시 적용 예시 소개</li>
+      <li><strong>핸즈온 1:</strong> 회원가입 및 첫 공간 기본 구성 (템플릿 선택, 환경 설정)</li>
+      <li><strong>핸즈온 2:</strong> 3D 모델 업로드 및 오브젝트 배치 심화 (Transform, Grid Snap)</li>
+      <li><strong>핸즈온 3:</strong> Info Panel·Teleport 설정 및 공유 (팝업, 이동 지점 구성)</li>
+      <li><strong>실습 과제:</strong> 최종 과제 안내 및 LMS 제출 가이드</li>
+    </ol>
+  </section>
+
+
+<!-- 1-1. CS 개요 -->
+<section class="slide">
+  <h2>1-1. 메타버스 컴퓨터 공학 개요</h2>
+  <p>메타버스는 현실 세계를 디지털로 모방한 <strong>3D 가상 공간</strong>으로, 사용자는 아바타를 통해 이동·소통·상호작용을 합니다.<br>Spatial.io는 플러그인 없이 웹 브라우저만으로 이 공간을 실시간으로 렌더링하고 동기화합니다.</p>
+  <p><strong>중심 개념 세 가지:</strong></p>
+  <ul>
+    <li><strong>렌더링(Rendering):</strong> 3D 데이터를 화면에 그려보이게 하는 과정</li>
+    <li><strong>네트워크(Networking):</strong> 사용자 간 실시간 상호작용을 동기화</li>
+    <li><strong>배포(Distribution):</strong> 전 세계에 빠르게 콘텐츠 전달</li>
+  </ul>
+  <p>다음 슬라이드에서 각 기술의 핵심 원리를 자세히 살펴보겠습니다.</p>
+</section>
+
+<!-- 2-2. 주요 기술 상세 -->
+<section class="slide">
+  <h2></i>1-2. 메타버스 관련 주요 기술 (1) </h2>
+  <ul>
+    <li>
+      <strong>WebGL:</strong> 브라우저에서 <a href="https://developer.mozilla.org/ko/docs/Web/API/WebGL_API/Tutorial" target="_blank">3D 그래픽</a>을 실시간 렌더링하는 JavaScript API입니다.<br> 이 API는 하드웨어 가속을 통해 복잡한 3D 장면을 부드럽게 그릴 수 있습니다.
+      (<span class="tooltip">렌더링<span class="tooltiptext">3D 모델 데이터를 화면에 그려 실제처럼 표현하는 과정입니다. GPU를 활용해 복잡한 계산을 빠르게 처리합니다. 이를 통해 사용자에게 자연스러운 시각 경험을 제공합니다.</span></span>)
+    </li>
+    <li>
+      <strong>WebRTC:</strong> 브라우저 간 P2P로 오디오·비디오·데이터를 전송하는 기술입니다. <br> 이 기술은 브라우저만으로 실시간 멀티미디어 통신을 가능하게 합니다.
+      (<span class="tooltip">P2P<span class="tooltiptext">Peer-to-Peer의 약자로, 서버를 거치지 않고 참여자끼리 직접 연결해 데이터 전송을 수행합니다. 이 방식은 지연 시간을 크게 줄여 실시간 커뮤니케이션을 가능하게 합니다.</span></span>)<br>
+      <a href="https://developer.mozilla.org/ko/docs/Web/API/WebRTC_API" target="_blank">자세히 보기</a>
+    </li>
+    <li>
+      <strong>STUN/TURN 서버:</strong> NAT 방화벽 뒤에서도 P2P 연결을 돕는 중계 서버입니다.<br> 이를 통해 방화벽 및 NAT 환경에서도 안정적인 P2P 연결이 보장됩니다.
+      (<span class="tooltip">NAT<span class="tooltiptext">Network Address Translation의 약어로, 사설 IP 주소를 공인 IP로 변환해 외부와 통신할 수 있게 합니다. 이 기술 덕분에 다양한 네트워크 환경에서도 안정적인 연결이 가능합니다.</span></span>)
+    </li>
+    <li>
+      <strong>RTC Data Channel:</strong> WebRTC 상에서 채팅 메시지·오브젝트 상태를 주고받는 데이터 채널입니다. <br>낮은 지연으로 게임 및 협업 애플리케이션에서 주로 활용됩니다.
+      (<span class="tooltip">데이터 채널<span class="tooltiptext">WebRTC에서 제공하는 양방향 데이터 전송 통로로, 스트리밍 지연을 최소화해 실시간 동기화를 지원합니다. 이를 통해 채팅 메시지, 제어 신호, 상태 업데이트가 즉시 반영됩니다.</span></span>)<br>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCDataChannel" target="_blank">자세히 보기</a>
+    </li>
+  </ul>
+  <p>이러한 기술들은 메타버스 공간을 실시간으로 렌더링하고, 사용자 간 상호작용을 원활하게 만들어 줍니다.</p>
+</section>
+<!-- 1-3. 메타버스 기술 원리 -->
+<section class="slide">
+  <h2>1-3. 메타버스 관련 주요 기술 (2)</h2>
+  <ul>
+    <li>
+      <strong>LOD (Level of Detail):</strong> 객체 거리별로 세밀도를 조절해 GPU 부하를 낮추는 기법입니다.<br> 여러 단계로 구분된 세부 모델을 동적으로 적용해 시각적 품질을 유지합니다.
+      (<span class="tooltip">LOD<span class="tooltiptext">객체가 멀어질수록 폴리곤 수를 줄여 렌더링 연산량을 최적화합니다. 이 기법은 다양한 거리 단계별로 모델을 전환해 부드러운 전환을 제공합니다.</span></span>)<br>
+      <a href="https://en.wikipedia.org/wiki/Level_of_detail" target="_blank">개념 보기</a>
+    </li>
+    <li>
+      <strong>뷰 프러스텀 컬링:</strong> 카메라 시야 밖 객체를 렌더링하지 않는 기법입니다. <br> 프러스텀 경계 연산을 통해 빠르게 제외 대상을 결정합니다.
+      (<span class="tooltip">프러스텀 컬링<span class="tooltiptext">카메라 시야(Frustum) 밖의 객체를 탐지해 렌더링 대상에서 제외합니다. 이로 인해 불필요한 렌더링 작업을 크게 줄일 수 있습니다.</span></span>)<br>
+      <a href="https://en.wikipedia.org/wiki/Viewing_frustum#Clipping" target="_blank">자세히 보기</a>
+    </li>
+    <li>
+      <strong>CDN &amp; 서버리스:</strong> 전 세계에 분산된 CDN으로 정적 자산을 빠르게 제공하고, 서버리스 함수로 이벤트 기반 백엔드를 운영해 안정성과 확장성을 확보합니다. 이 구조는 트래픽 급증 시에도 자동으로 자원을 확장시켜 가용성을 유지합니다.
+      (<span class="tooltip">서버리스<span class="tooltiptext">서버 관리 없이 코드만 배포해 실행 가능한 클라우드 컴퓨팅 모델입니다. 이 방식은 운영 부담을 줄이고 개발 속도를 높여줍니다.</span></span>)<br>
+      <a href="https://aws.amazon.com/serverless/" target="_blank">AWS 서버리스 핸즈온</a>
+    </li>
+  </ul>
+  <p>메타버스는 물리적 현실의 제약을 넘어 사용자가 디지털 공간에서 자유롭게 활동할 수 있는 환경을 제공합니다.<br> 아바타를 통해 전 세계 사람과 협업·소통하며, 실시간으로 경험을 공유할 수 있습니다.<br> 이러한 공간은 교육, 엔터테인먼트, 비즈니스 등 다양한 분야에서 새로운 가능성을 열어줍니다.</p>
+</section>
+
+<!-- 2-1. KOREATECH 가상 실습 체험 -->
+<section class="slide">
+  <h2>2-1. KOREATECH 가상 실습 체험</h2>
+  
+  <!-- 소개 문장 (전체 폭) -->
+  <p style="margin-top:24px; margin-bottom:24px; line-height:1.5;">
+    KOREATECH의 Spatial.io 공간은 <strong>로비 → 기계실 → 안전 교육 구역 → 실습실</strong> 순으로 단계별로 설계되어 있어요.<br>
+    각 구역에서 실제 장비 조작부터 안전 절차, 공정 체험까지 모두 직접 경험해 볼 수 있습니다.
+  </p>
+
+  <!-- 본문: 왼쪽 목록, 오른쪽 이미지 -->
+  <div style="display:flex; align-items:flex-start; gap:32px;">
+    <div style="flex:1; text-align:left; line-height:1.6;">
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li>🏠 <strong>로비:</strong> 모듈별 실습 공간 이동용 안내판이 있어요.</li>
+        <li>🔧 <strong>기계실:</strong> 3D 장비 스위치를 켜고 작동 방식을 직접 배워 보세요.</li>
+        <li>🦺 <strong>안전 교육 구역:</strong> 인터랙티브 안내판으로 보호장비 착용과 안전 절차를 연습할 수 있어요.</li>
+        <li>⚙️ <strong>실습실:</strong> 용접·조립 등 공정 단계를 워크스테이션에서 실습해 보세요.</li>
+      </ul>
+    </div>
+    <div style="flex:1;">
+      <img
+        src="https://cdn2.spatial.io/s/case-studies/korea-tech/overview.webp"
+        alt="KOREATECH 가상 실습 환경"
+        style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);"
+      >
+    </div>
+  </div>
+
+  <!-- 학생 체험 미션 (하단 중앙 정렬) -->
+  <div style="text-align:center; margin-top:32px;">
+    <h3 style="font-size:26px; margin-bottom:16px;">🔍 실습 미션</h3>
+    <ol style="display:inline-block; text-align:left; padding-left:20px; margin:0; line-height:1.6;">
+      <li>로비 안내판에서 ‘기계실’ 아이콘을 클릭해 이동해 보세요.</li>
+      <li>안전 교육 구역에서 헬멧·장갑 착용 단계를 순서대로 완료해 보세요.</li>
+      <li>실습실에서 용접 모듈의 조작 패널을 사용해 공정 단계를 체험해 보세요.</li>
+    </ol>
+    <p style="margin-top:24px;">
+      <a href="https://www.spatial.io/case-studies/korea-tech" target="_blank">
+        ▶ KOREATECH 공간 더 살펴보기
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- 2-2. Jack Daniel's ‘The Verse’ 체험 미션 -->
+<section class="slide">
+  <h2>2-2. Jack Daniel's ‘The Verse’ 체험 미션</h2>
+  <!--intro 전체 폭으로 노출-->
+  <p style="margin-top:24px; margin-bottom:24px; line-height:1.5;">
+    ‘The Verse’는 <strong>아트 전시 → 콘서트 스테이지 → 스페이스 엘리베이터 & 무중력 튜브 → 허니 라운지</strong>로 구성된 4개 층의 멀티체험 공간입니다.<BR>
+    각 층마다 색다른 예술·공연·체험·네트워킹을 자유롭게 즐길 수 있어요.
+  </p>
+
+  <!--본문: 왼쪽에 목록, 오른쪽에 이미지-->
+  <div style="display:flex; align-items:flex-start; gap:32px;">
+    <div style="flex:1; text-align:left; line-height:1.6;">
+      <ul style="list-style:none; padding-left:0; margin:10;">
+        <li>🎨 <strong>아트 전시관 (Level 1):</strong> 30여 명 아티스트의 작품이 갤러리처럼 전시된 공간.</li>
+        <li>🎤 <strong>콘서트 스테이지 (Level 2):</strong> Phony Ppl의 가상 공연을 실감 나게 관람할 수 있어요.</li>
+        <li>🚀 <strong>스페이스 엘리베이터 & 무중력 튜브:</strong> 우주로 올라가 무중력을 체험하는 인터랙티브 존.</li>
+        <li>🍯 <strong>허니 라운지:</strong> 다른 참가자와 자유롭게 대화하며 네트워킹할 수 있는 소셜 공간.</li>
+      </ul>
+    </div>
+    <div style="flex:1;">
+      <img
+        src="https://cdn2.spatial.io/s/case-studies/jack-daniel/overview.webp"
+        alt="Jack Daniel's ‘The Verse’ 공간"
+       style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);"
+      >
+    </div>
+  </div>
+
+  <!--학생 미션 (하단 중앙 정렬)-->
+  <div style="text-align:center; margin-top:32px;">
+    <h3 style="font-size:26px; margin-bottom:16px;">🔍 실습 미션</h3>
+    <ol style="display:inline-block; text-align:left; padding-left:20px; margin:0; line-height:1.6;">
+      <li>아트 전시관을 둘러보며 작품 2~3점을 골라 보세요.</li>
+      <li>콘서트 스테이지에서 공연을 관람하며 현장감을 느껴 보세요.</li>
+      <li>스페이스 엘리베이터에 탑승해 무중력을 직접 체험해 보세요.</li>
+    </ol>
+    <p style="margin-top:24px;">
+      <a href="https://www.spatial.io/case-studies/jack-daniel" target="_blank">
+        ▶ ‘The Verse’ 공간 더 살펴보기
+      </a>
+    </p>
+  </div>
+</section>
+
+
+<section class="slide">
+  <h2>3-1. 회원가입 & 첫 공간 만들기</h2>
+  <p>간단한 절차로 첫 가상 공간을 구성해 봅시다.</p>
+  <ol>
+    <li><strong>접속 & 가입:</strong> <a href="https://www.spatial.io" target="_blank">spatial.io</a> → Sign Up → 이메일/Google 인증</li>
+    <li><strong>템플릿 선택:</strong> Art Gallery, Conference Room, Classroom 중 하나 선택</li>
+    <li><strong>환경 설정:</strong> 조명, 배경음, Skybox 변경 (Light & Environment 메뉴)</li>
+    <li><strong>발행:</strong> Save & Publish 클릭 → 공개 URL 확인</li>
+  </ol>
+  <p>참고 튜토리얼:<br>
+    • <a href="https://youtu.be/02n81hGkioo?si=bhYrZNKfcOx_l8CZ" target="_blank">📺 Getting Started with Spatial.io (YouTube)</a><br>
+  </p>
+</section>
+
+  <!-- Advanced Placement -->
+ <section class="slide">
+  <h2>3-2. 갤러리 꾸미기 실습: 사진 & 오브젝트 배치</h2>
+  <p style="font-size:22px">이번에는 <strong>Art Gallery 템플릿</strong>을 선택한 뒤, 자신의 사진을 업로드하고 3D 오브젝트로 공간을 꾸며보는 실습을 진행합니다.</p>
+
+  <ol>
+    <li><strong>사진 업로드:</strong> 공간에 들어간 뒤, <code>Upload → Image</code>를 클릭해 <u>나만의 사진</u>을 벽에 배치해 봅니다.</li>
+    <li><strong>오브젝트 선택:</strong> ‘Context’ 메뉴에서 <em>작품 받침대, 화분, 테이블</em> 등 원하는 물체를 골라 배치해 봅니다.</li>
+    <li><strong>정밀 조정:</strong> T(이동) · R(회전) · S(크기조절) 키를 눌러 정확한 위치에 맞게 조정합니다.</li>
+    <li><strong>음향존 추가 (선택):</strong> 특정 구역에 배경 음악을 추가할 수 있어요! <code>Environment → Sound Zones</code></li>
+  </ol>
+
+  <p style="margin-top:20px">📘 추가 학습 자료:<br>
+    • <a href="https://www.khronos.org/gltf/" target="_blank">glTF 공식 문서 (Khronos Group)</a>
+  </p>
+</section>
+
+
+  <!-- Assignment -->
+  <section class="slide">
+    <h2>4. 실습 과제 안내</h2>
+    <p>모두 수고하셨어요! <Br> 오늘도 과제를 통해 오늘 배운 실습 수업을 정리해보아요(❁´◡`❁)</p>
+    <ol>
+      <li>KoreaTech 가상 실습 체험에서 흥미 있었던 부분</li>
+      <li>Jack Daniel's 'The Verse' 가상 실습 체험에서 흥미 있었던 부분</li>
+      <li>나의 갤러리에 사진과 context 물품 1개 업로드 후 스크린샷: 전체 뷰 1장</li>
+      <li>내가 생각한 메타버스의 장점과 단점</li>
+    </ol>
+    <p>- 제출 방법: Word파일 1~2장 분량으로 Eclass 업로드</p>
+    <p>- 주의 사항: Word파일 상단에 학번, 이름 명시시</p>
+  </section>
+
+  <!-- Closing -->
+  <section class="slide cover" style="background: linear-gradient(135deg, var(--secondary), var(--primary));">
+    <h1>수고하셨습니다!</h1>
+    <h3>문의사항 : 이인선<br> sera5278@naver.com</h3>
+  </section>
+
+</div>
+</body>
+</html>
